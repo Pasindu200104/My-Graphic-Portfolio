@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galactic Graphics | Professional Design Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': {
+                                opacity: '0',
+                                transform: 'translateY(30px)'
+                            },
+                            '100%': {
+                                opacity: '1',
+                                transform: 'translateY(0)'
+                            }
+                        },
+                        slideInLeft: {
+                            '0%': {
+                                opacity: '0',
+                                transform: 'translateX(-30px)'
+                            },
+                            '100%': {
+                                opacity: '1',
+                                transform: 'translateX(0)'
+                            }
+                        },
+                        slideInRight: {
+                            '0%': {
+                                opacity: '0',
+                                transform: 'translateX(30px)'
+                            },
+                            '100%': {
+                                opacity: '1',
+                                transform: 'translateX(0)'
+                            }
+                        },
+                        scaleIn: {
+                            '0%': {
+                                opacity: '0',
+                                transform: 'scale(0.95)'
+                            },
+                            '100%': {
+                                opacity: '1',
+                                transform: 'scale(1)'
+                            }
+                        },
+                        glow: {
+                            '0%, 100%': {
+                                boxShadow: '0 0 5px rgba(59, 130, 246, 0.5)'
+                            },
+                            '50%': {
+                                boxShadow: '0 0 20px rgba(59, 130, 246, 0.8)'
+                            }
+                        }
+                    },
+                    animation: {
+                        fadeInUp: 'fadeInUp 0.6s ease-out',
+                        slideInLeft: 'slideInLeft 0.6s ease-out',
+                        slideInRight: 'slideInRight 0.6s ease-out',
+                        scaleIn: 'scaleIn 0.5s ease-out',
+                        glow: 'glow 2s ease-in-out infinite'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * {
+            scroll-behavior: smooth;
+        }
+        
+        .portfolio-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .portfolio-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease, filter 0.5s ease;
+        }
+        
+        .portfolio-item:hover img {
+            transform: scale(1.1) rotate(2deg);
+            filter: brightness(1.1);
+        }
+        
+        .portfolio-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: flex-end;
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        
+        .portfolio-item:hover .portfolio-overlay {
+            opacity: 1;
+        }
+        
+        .section-title {
+            position: relative;
+            display: inline-block;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 1rem;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, #4a9fd8, #a8b5c7);
+            border-radius: 2px;
+        }
+        
+        .navbar {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.8);
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #4a9fd8;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, rgba(10, 14, 39, 0.85) 0%, rgba(26, 40, 71, 0.85) 100%), 
+                        url('Background/freepik__give-me-a-nice-background-image-for-a-dark-graphic__76109.png') center/cover no-repeat;
+        }
+        
+        .feature-card {
+            background: linear-gradient(135deg, #1a2847 0%, #0f1a35 100%);
+            border: 1px solid #4a9fd8;
+            border-radius: 15px;
+            padding: 2rem;
+            color: white;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(74, 159, 216, 0.1);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
+        }
+        
+        .gallery-grid {
+            display: grid;
+            gap: 2rem;
+            animation: fadeInUp 0.8s ease-out;
+        }
+        
+        @media (max-width: 640px) {
+            .section-title {
+                font-size: 1.875rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <!-- Navbar -->
+    <nav class="navbar sticky top-0 z-50 border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center gap-2">
+                    <img src="Logos/Galactic.jpg" alt="Galactic Graphics" class="w-10 h-10 rounded-lg object-cover">
+                    <span class="font-bold text-xl text-gray-800 hidden sm:inline">Galactic Graphics</span>
+                </div>
+                <div class="hidden md:flex gap-8">
+                    <a href="#home" class="nav-link text-gray-700 font-medium">Home</a>
+                    <a href="#flyers" class="nav-link text-gray-700 font-medium">Flyers</a>
+                    <a href="#logos" class="nav-link text-gray-700 font-medium">Logos</a>
+                    <a href="#posters" class="nav-link text-gray-700 font-medium">Posters</a>
+                    <a href="#thumbnails" class="nav-link text-gray-700 font-medium">Thumbnails</a>
+                    <a href="#contact" class="nav-link text-gray-700 font-medium">Contact</a>
+                </div>
+                <button class="md:hidden p-2 hover:bg-gray-100 rounded-lg transition">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="miter" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-gradient text-white py-32 px-4 sm:px-6 lg:px-8 animated">
+        <div class="max-w-4xl mx-auto text-center">
+            <h1 class="text-5xl sm:text-6xl font-bold mb-6 animate-fadeInUp">
+                Galactic Graphics
+            </h1>
+            <p class="text-xl sm:text-2xl mb-8 text-gray-100 animate-fadeInUp" style="animation-delay: 0.1s">
+                Futuristic design solutions that bring your vision to life
+            </p>
+            <div class="flex gap-4 justify-center flex-wrap animate-fadeInUp" style="animation-delay: 0.2s">
+                <button onclick="document.getElementById('flyers').scrollIntoView()" class="bg-white text-gray-900 px-8 py-3 rounded-lg font-bold hover:bg-gray-100 transition transform hover:scale-105">
+                    View Works
+                </button>
+                <button onclick="document.getElementById('contact').scrollIntoView()" class="border-2 border-white text-white px-8 py-3 rounded-lg font-bold hover:bg-white hover:text-purple-600 transition">
+                    Get in Touch
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16 animate-fadeInUp">
+                <h2 class="section-title">Why Choose Me</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="feature-card animate-fadeInUp" style="animation-delay: 0.1s">
+                    <div class="text-4xl mb-4">🎨</div>
+                    <h3 class="text-2xl font-bold mb-3">Creative Design</h3>
+                    <p class="text-gray-100">Original and innovative designs tailored to your brand identity and vision.</p>
+                </div>
+                <div class="feature-card animate-fadeInUp" style="animation-delay: 0.2s">
+                    <div class="text-4xl mb-4">⚡</div>
+                    <h3 class="text-2xl font-bold mb-3">Fast Delivery</h3>
+                    <p class="text-gray-100">Quick turnaround times without compromising on quality and creativity.</p>
+                </div>
+                <div class="feature-card animate-fadeInUp" style="animation-delay: 0.3s">
+                    <div class="text-4xl mb-4">🎯</div>
+                    <h3 class="text-2xl font-bold mb-3">Professional</h3>
+                    <p class="text-gray-100">High-quality, polished designs that elevate your brand presence.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Flyers Section -->
+    <section id="flyers" class="py-20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto">
+            <div class="mb-16 animate-fadeInUp">
+                <h2 class="section-title">Flyers & Promotional Posts</h2>
+                <p class="text-gray-600 mt-4 text-lg">Eye-catching promotional designs that capture attention and drive engagement</p>
+            </div>
+            <div class="gallery-grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="portfolio-item h-80 animate-scaleIn cursor-pointer" onclick="openModal(this)">
+                    <img src="Flyers/bach party03.jpg" alt="Bach Party Flyer">
+                    <div class="portfolio-overlay">
+                        <div class="text-white text-sm font-semibold">Bach Party Design</div>
+                    </div>
+                </div>
+                <div class="portfolio-item h-80 animate-scaleIn cursor-pointer" style="animation-delay: 0.05s" onclick="openModal(this)">
+                    <img src="Flyers/chamil class post.jpg" alt="Class Post">
+                    <div class="portfolio-overlay">
+                        <div class="text-white text-sm font-semibold">Class Promotional Post</div>
+                    </div>
+                </div>
+                <div class="portfolio-item h-80 animate-scaleIn cursor-pointer" style="animation-delay: 0.1s" onclick="openModal(this)">
+                    <img src="Flyers/christmas.jpg" alt="Christmas Post">
+                    <div class="portfolio-overlay">
+                        <div class="text-white text-sm font-semibold">Holiday Season Post</div>
+                    </div>
+                </div>
+                <div class="portfolio-item h-80 animate-scaleIn cursor-pointer" style="animation-delay: 0.15s" onclick="openModal(this)">
+                    <img src="Flyers/cricket2.jpg" alt="Cricket Event">
+                    <div class="portfolio-overlay">
+                        <div class="text-white text-sm font-semibold">Event Promotion</div>
+                    </div>
+                </div>
+                <div class="portfolio-item h-80 animate-scaleIn cursor-pointer" style="animation-delay: 0.2s" onclick="openModal(this)">
+                    <img src="Flyers/ishara hotel.jpg" alt="Hotel Flyer">
+                    <div class="portfolio-overlay">
+                        <div class="text-white text-sm font-semibold">Hotel Promotion</div>
+                    </div>
+                </div>
+                <div class="portfolio-item h-80 animate-scaleIn cursor-pointer" style="animation-delay: 0.25s" onclick="openModal(this)">
+                    <img src="Flyers/kanishka malli class post 05.jpg" alt="Class Post">
+                    <div class="portfolio-overlay">
+                        <div class="text-white text-sm font-semibold">Educational Post</div>
+                    </div>
+                </div>
+                <div class="portfolio-item h-80 animate-scaleIn cursor-pointer" style="animation-delay: 0.3s" onclick="openModal(this)">
+                    <img src="Flyers/mini offer.jpg" alt="Promotional Offer">
+                    <div class="portfolio-overlay">
+                        <div class="text-white text-sm font-semibold">Special Offer</div>
+                    </div>
+                </div>
+                <div class="portfolio-item h-80 animate-scaleIn cursor-pointer" style="animation-delay: 0.35s" onclick="openModal(this)">
+                    <img src="Flyers/New year new post.jpg" alt="New Year Post">
+                    <div class="portfolio-overlay">
+                        <div class="text-white text-sm font-semibold">New Year Campaign</div>
+                    </div>
+                </div>
+                <div class="portfolio-item h-80 animate-scaleIn cursor-pointer" style="animation-delay: 0.4s" onclick="openModal(this)">
+                    <img src="Flyers/nethmina malli class post 2.jpg" alt="Nethmina Class Post">
+                    <div class="portfolio-overlay">
+                        <div class="text-white text-sm font-semibold">Educational Campaign</div>
+                    </div>
+                </div>
+                <div class="portfolio-item h-80 animate-scaleIn cursor-pointer" style="animation-delay: 0.45s" onclick="openModal(this)">
+                    <img src="Flyers/Nethmina post 02.jpg" alt="Nethmina Post">
+                    <div class="portfolio-overlay">
+                        <div class="text-white text-sm font-semibold">Promotional Design</div>
+                    </div>
+                </div>
+                <div class="portfolio-item h-80 animate-scaleIn cursor-pointer" style="animation-delay: 0.5s" onclick="openModal(this)">
+                    <img src="Flyers/nexus premier legue.jpg" alt="Premier League">
+                    <div class="portfolio-overlay">
+                        <div class="text-white text-sm font-semibold">Sports Event</div>
+                    </div>
+                </div>
+                <div class="portfolio-item h-80 animate-scaleIn cursor-pointer" style="animation-delay: 0.55s" onclick="openModal(this)">
+                    <img src="Flyers/nirodha bandara org.jpg" alt="Nirodha Event">
+                    <div class="portfolio-overlay">
+                        <div class="text-white text-sm font-semibold">Event Organization</div>
+                    </div>
+                </div>
+                <div class="portfolio-item h-80 animate-scaleIn cursor-pointer" style="animation-delay: 0.6s" onclick="openModal(this)">
+                    <img src="Flyers/nirodha bandara post 2.jpg" alt="Nirodha Post">
+                    <div class="portfolio-overlay">
+                        <div class="text-white text-sm font-semibold">Event Promotion</div>
+                    </div>
+                </div>
+                <div class="portfolio-item h-80 animate-scaleIn cursor-pointer" style="animation-delay: 0.65s" onclick="openModal(this)">
+                    <img src="Flyers/science2.jpg" alt="Science Event">
+                    <div class="portfolio-overlay">
+                        <div class="text-white text-sm font-semibold">Science Campaign</div>
+                    </div>
+                </div>
+                <div class="portfolio-item h-80 animate-scaleIn cursor-pointer" style="animation-delay: 0.7s" onclick="openModal(this)">
+                    <img src="Flyers/soorya udanaya 2025 07.jpg" alt="Soorya Event">
+                    <div class="portfolio-overlay">
+                        <div class="text-white text-sm font-semibold">Event Flyer</div>
+                    </div>
+                </div>
+                <div class="portfolio-item h-80 animate-scaleIn cursor-pointer" style="animation-delay: 0.75s" onclick="openModal(this)">
+                    <img src="Flyers/Soorya Udanaya Aradana new.jpg" alt="Soorya Aradana">
+                    <div class="portfolio-overlay">
+                        <div class="text-white text-sm font-semibold">Special Event</div>
+                    </div>
+                </div>
+                <div class="portfolio-item h-80 animate-scaleIn cursor-pointer" style="animation-delay: 0.8s" onclick="openModal(this)">
+                    <img src="Flyers/soorya udanaya registration open ORG 02.jpg" alt="Registration">
+                    <div class="portfolio-overlay">
+                        <div class="text-white text-sm font-semibold">Registration Campaign</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Handbills Section -->
+    <section class="py-20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto">
+            <div class="mb-16 animate-fadeInUp">
+                <h2 class="section-title">Handbills</h2>
+                <p class="text-gray-600 mt-4 text-lg">Professional handbill designs for effective promotions</p>
+            </div>
+            <div class="gallery-grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="portfolio-item h-80 animate-scaleIn cursor-pointer" onclick="openModal(this)">
+                    <img src="Handbills/Aradana pathraya 02.jpg" alt="Aradana Handbill">
+                    <div class="portfolio-overlay">
+                        <div class="text-white text-sm font-semibold">Aradana Pathway</div>
+                    </div>
+                </div>
+                <div class="portfolio-item h-80 animate-scaleIn cursor-pointer" style="animation-delay: 0.1s" onclick="openModal(this)">
+                    <img src="Handbills/Kanishka ICT Handbill A5 04.jpg" alt="ICT Handbill">
+                    <div class="portfolio-overlay">
+                        <div class="text-white text-sm font-semibold">ICT Course</div>
+                    </div>
+                </div>
+                <div class="portfolio-item h-80 animate-scaleIn cursor-pointer" style="animation-delay: 0.2s" onclick="openModal(this)">
+                    <img src="Handbills/Savindu Handbill 03.jpg" alt="Savindu Handbill">
+                    <div class="portfolio-overlay">
+                        <div class="text-white text-sm font-semibold">Savindu Design</div>
+                    </div>
+                </div>
+                <div class="portfolio-item h-80 animate-scaleIn cursor-pointer" style="animation-delay: 0.3s" onclick="openModal(this)">
+                    <img src="Handbills/Savindu Handbill new 02.jpg" alt="Savindu New Handbill">
+                    <div class="portfolio-overlay">
+                        <div class="text-white text-sm font-semibold">Savindu Promo</div>
+                    </div>
+                </div>
+                <div class="portfolio-item h-80 animate-scaleIn cursor-pointer" style="animation-delay: 0.4s" onclick="openModal(this)">
+                    <img src="Handbills/science class hand bill.jpg" alt="Science Class Handbill">
+                    <div class="portfolio-overlay">
+                        <div class="text-white text-sm font-semibold">Science Class</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Logos Section -->
+    <section id="logos" class="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div class="max-w-6xl mx-auto">
+            <div class="mb-16 animate-fadeInUp">
+                <h2 class="section-title">Logo & Brand Design</h2>
+                <p class="text-gray-600 mt-4 text-lg">Distinctive brand identities that leave a lasting impression</p>
+            </div>
+            <div class="gallery-grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <div class="portfolio-item h-80 animate-scaleIn cursor-pointer" onclick="openModal(this)">
+                    <img src="Logos/Abey Gems.png" alt="Abey Gems Logo">
+                    <div class="portfolio-overlay">
+                        <div class="text-white text-sm font-semibold">Abey Gems</div>
+                    </div>
+                </div>
+                <div class="portfolio-item h-80 animate-scaleIn cursor-pointer" style="animation-delay: 0.05s" onclick="openModal(this)">
+                    <img src="Logos/bright candles 04.jpg" alt="Candles Logo">
+                    <div class="portfolio-overlay">
+                        <div class="text-white text-sm font-semibold">Bright Candles</div>
+                    </div>
+                </div>
+                <div class="portfolio-item h-80 animate-scaleIn cursor-pointer" style="animation-delay: 0.1s" onclick="openModal(this)">
+                    <img src="Logos/chanaka gem v4.jpg" alt="Chanaka Gem">
+                    <div class="portfolio-overlay">
+                        <div class="text-white text-sm font-semibold">Chanaka Gem</div>
+                    </div>
+                </div>
+                <div class="portfolio-item h-80 animate-scaleIn cursor-pointer" style="animation-delay: 0.15s" onclick="openModal(this)">
+                    <img src="Logos/Chanaka LC ORG 02.jpg" alt="Chanaka LC">
+                    <div class="portfolio-overlay">
+                        <div class="text-white text-sm font-semibold">Chanaka LC</div>
+                    </div>
+                </div>
+                <div class="portfolio-item h-80 animate-scaleIn cursor-pointer" style="animation-delay: 0.2s" onclick="openModal(this)">
+                    <img src="Logos/Galactic.jpg" alt="Galactic Logo">
+                    <div class="portfolio-overlay">
+                        <div class="text-white text-sm font-semibold">Galactic Graphics</div>
+                    </div>
+                </div>
+                <div class="portfolio-item h-80 animate-scaleIn cursor-pointer" style="animation-delay: 0.25s" onclick="openModal(this)">
+                    <img src="Logos/himazz 02.jpg" alt="Himazz Logo">
+                    <div class="portfolio-overlay">
+                        <div class="text-white text-sm font-semibold">Himazz Brand</div>
+                    </div>
+                </div>
+                <div class="portfolio-item h-80 animate-scaleIn cursor-pointer" style="animation-delay: 0.3s" onclick="openModal(this)">
+                    <img src="Logos/hunter game play new logo.jpg" alt="Hunter Logo">
+                    <div class="portfolio-overlay">
+                        <div class="text-white text-sm font-semibold">Hunter GamePlay</div>
+                    </div>
+                </div>
+                <div class="portfolio-item h-80 animate-scaleIn cursor-pointer" style="animation-delay: 0.35s" onclick="openModal(this)">
+                    <img src="Logos/kraza 02.png" alt="Kraza Logo">
+                    <div class="portfolio-overlay">
+                        <div class="text-white text-sm font-semibold">Kraza</div>
+                    </div>
+                </div>
+                <div class="portfolio-item h-80 animate-scaleIn cursor-pointer" style="animation-delay: 0.4s" onclick="openModal(this)">
+                    <img src="Logos/linkmate.png" alt="LinkMate Logo">
+                    <div class="portfolio-overlay">
+                        <div class="text-white text-sm font-semibold">LinkMate</div>
+                    </div>
+                </div>
+                <div class="portfolio-item h-80 animate-scaleIn cursor-pointer" style="animation-delay: 0.45s" onclick="openModal(this)">
+                    <img src="Logos/Mini update.jpg" alt="Mini Update Logo">
+                    <div class="portfolio-overlay">
+                        <div class="text-white text-sm font-semibold">Mini Update</div>
+                    </div>
+                </div>
+                <div class="portfolio-item h-80 animate-scaleIn cursor-pointer" style="animation-delay: 0.5s" onclick="openModal(this)">
+                    <img src="Logos/mudiyanse.jpg" alt="Mudiyanse Logo">
+                    <div class="portfolio-overlay">
+                        <div class="text-white text-sm font-semibold">Mudiyanse</div>
+                    </div>
+                </div>
+                <div class="portfolio-item h-80 animate-scaleIn cursor-pointer" style="animation-delay: 0.55s" onclick="openModal(this)">
+                    <img src="Logos/naveen foods.png" alt="Naveen Foods">
+                    <div class="portfolio-overlay">
+                        <div class="text-white text-sm font-semibold">Naveen Foods</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Posters Section -->
+    <section id="posters" class="py-20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto">
+            <div class="mb-16 animate-fadeInUp">
+                <h2 class="section-title">Posters</h2>
+                <p class="text-gray-600 mt-4 text-lg">Visually striking poster designs for maximum impact</p>
+            </div>
+            <div class="gallery-grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="portfolio-item h-96 animate-scaleIn cursor-pointer" onclick="openModal(this)">
+                    <img src="Posters/kanishka new post 08.jpg" alt="Kanishka Poster">
+                    <div class="portfolio-overlay">
+                        <div class="text-white text-sm font-semibold">Promotional Poster</div>
+                    </div>
+                </div>
+                <div class="portfolio-item h-96 animate-scaleIn cursor-pointer" style="animation-delay: 0.1s" onclick="openModal(this)">
+                    <img src="Posters/Sweet Rainbow.jpg" alt="Sweet Rainbow">
+                    <div class="portfolio-overlay">
+                        <div class="text-white text-sm font-semibold">Sweet Rainbow</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Thumbnails Section -->
+    <section id="thumbnails" class="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div class="max-w-6xl mx-auto">
+            <div class="mb-16 animate-fadeInUp">
+                <h2 class="section-title">Gaming Thumbnails</h2>
+                <p class="text-gray-600 mt-4 text-lg">Eye-catching thumbnails designed to maximize video engagement</p>
+            </div>
+            <div class="gallery-grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <div class="portfolio-item h-64 animate-scaleIn cursor-pointer" onclick="openModal(this)">
+                    <img src="Thumbnail/4f5be079-1a24-4614-9330-1e95ff5febee.jpg" alt="Gaming Thumbnail">
+                    <div class="portfolio-overlay">
+                        <div class="text-white text-sm font-semibold">Gaming Design</div>
+                    </div>
+                </div>
+                <div class="portfolio-item h-64 animate-scaleIn cursor-pointer" style="animation-delay: 0.05s" onclick="openModal(this)">
+                    <img src="Thumbnail/among us.jpg" alt="Among Us Thumbnail">
+                    <div class="portfolio-overlay">
+                        <div class="text-white text-sm font-semibold">Among Us</div>
+                    </div>
+                </div>
+                <div class="portfolio-item h-64 animate-scaleIn cursor-pointer" style="animation-delay: 0.1s" onclick="openModal(this)">
+                    <img src="Thumbnail/dragonball 07.jpg" alt="Dragon Ball">
+                    <div class="portfolio-overlay">
+                        <div class="text-white text-sm font-semibold">Dragon Ball</div>
+                    </div>
+                </div>
+                <div class="portfolio-item h-64 animate-scaleIn cursor-pointer" style="animation-delay: 0.15s" onclick="openModal(this)">
+                    <img src="Thumbnail/elden ring 02.jpg" alt="Elden Ring">
+                    <div class="portfolio-overlay">
+                        <div class="text-white text-sm font-semibold">Elden Ring</div>
+                    </div>
+                </div>
+                <div class="portfolio-item h-64 animate-scaleIn cursor-pointer" style="animation-delay: 0.2s" onclick="openModal(this)">
+                    <img src="Thumbnail/elden ring cheat.jpg" alt="Elden Ring Guide">
+                    <div class="portfolio-overlay">
+                        <div class="text-white text-sm font-semibold">Elden Ring Guide</div>
+                    </div>
+                </div>
+                <div class="portfolio-item h-64 animate-scaleIn cursor-pointer" style="animation-delay: 0.25s" onclick="openModal(this)">
+                    <img src="Thumbnail/Elden ring night 3.jpg" alt="Elden Ring Night">
+                    <div class="portfolio-overlay">
+                        <div class="text-white text-sm font-semibold">Night Edition</div>
+                    </div>
+                </div>
+                <div class="portfolio-item h-64 animate-scaleIn cursor-pointer" style="animation-delay: 0.3s" onclick="openModal(this)">
+                    <img src="Thumbnail/elden ring wylder.jpg" alt="Elden Ring Wylder">
+                    <div class="portfolio-overlay">
+                        <div class="text-white text-sm font-semibold">Wylder Realm</div>
+                    </div>
+                </div>
+                <div class="portfolio-item h-64 animate-scaleIn cursor-pointer" style="animation-delay: 0.35s" onclick="openModal(this)">
+                    <img src="Thumbnail/farcry 3 12.jpg" alt="Far Cry 3">
+                    <div class="portfolio-overlay">
+                        <div class="text-white text-sm font-semibold">Far Cry Series</div>
+                    </div>
+                </div>
+                <div class="portfolio-item h-64 animate-scaleIn cursor-pointer" style="animation-delay: 0.4s" onclick="openModal(this)">
+                    <img src="Thumbnail/farcry 3 16.jpg" alt="Far Cry 3 - 16">
+                    <div class="portfolio-overlay">
+                        <div class="text-white text-sm font-semibold">Far Cry Adventure</div>
+                    </div>
+                </div>
+                <div class="portfolio-item h-64 animate-scaleIn cursor-pointer" style="animation-delay: 0.45s" onclick="openModal(this)">
+                    <img src="Thumbnail/forza 04 01.jpg" alt="Forza">
+                    <div class="portfolio-overlay">
+                        <div class="text-white text-sm font-semibold">Forza Horizon</div>
+                    </div>
+                </div>
+                <div class="portfolio-item h-64 animate-scaleIn cursor-pointer" style="animation-delay: 0.5s" onclick="openModal(this)">
+                    <img src="Thumbnail/forza 4 05.jpg" alt="Forza 4">
+                    <div class="portfolio-overlay">
+                        <div class="text-white text-sm font-semibold">Forza 4 Racing</div>
+                    </div>
+                </div>
+                <div class="portfolio-item h-64 animate-scaleIn cursor-pointer" style="animation-delay: 0.55s" onclick="openModal(this)">
+                    <img src="Thumbnail/game on.jpg" alt="Game On">
+                    <div class="portfolio-overlay">
+                        <div class="text-white text-sm font-semibold">Game On</div>
+                    </div>
+                </div>
+                <div class="portfolio-item h-64 animate-scaleIn cursor-pointer" style="animation-delay: 0.6s" onclick="openModal(this)">
+                    <img src="Thumbnail/Ghost 02.jpg" alt="Ghost">
+                    <div class="portfolio-overlay">
+                        <div class="text-white text-sm font-semibold">Ghost Series</div>
+                    </div>
+                </div>
+                <div class="portfolio-item h-64 animate-scaleIn cursor-pointer" style="animation-delay: 0.65s" onclick="openModal(this)">
+                    <img src="Thumbnail/ghost 08.jpg" alt="Ghost 08">
+                    <div class="portfolio-overlay">
+                        <div class="text-white text-sm font-semibold">Phantom</div>
+                    </div>
+                </div>
+                <div class="portfolio-item h-64 animate-scaleIn cursor-pointer" style="animation-delay: 0.7s" onclick="openModal(this)">
+                    <img src="Thumbnail/Grounded 01.jpg" alt="Grounded">
+                    <div class="portfolio-overlay">
+                        <div class="text-white text-sm font-semibold">Grounded</div>
+                    </div>
+                </div>
+                <div class="portfolio-item h-64 animate-scaleIn cursor-pointer" style="animation-delay: 0.75s" onclick="openModal(this)">
+                    <img src="Thumbnail/last battle.jpg" alt="Last Battle">
+                    <div class="portfolio-overlay">
+                        <div class="text-white text-sm font-semibold">Last Battle</div>
+                    </div>
+                </div>
+                <div class="portfolio-item h-64 animate-scaleIn cursor-pointer" style="animation-delay: 0.8s" onclick="openModal(this)">
+                    <img src="Thumbnail/valorant 2.jpg" alt="Valorant">
+                    <div class="portfolio-overlay">
+                        <div class="text-white text-sm font-semibold">Valorant</div>
+                    </div>
+                </div>
+                <div class="portfolio-item h-64 animate-scaleIn cursor-pointer" style="animation-delay: 0.85s" onclick="openModal(this)">
+                    <img src="Thumbnail/valorant 4.jpg" alt="Valorant 4">
+                    <div class="portfolio-overlay">
+                        <div class="text-white text-sm font-semibold">Valorant Tactics</div>
+                    </div>
+                </div>
+                <div class="portfolio-item h-64 animate-scaleIn cursor-pointer" style="animation-delay: 0.9s" onclick="openModal(this)">
+                    <img src="Thumbnail/wuchang.jpg" alt="Wuchang">
+                    <div class="portfolio-overlay">
+                        <div class="text-white text-sm font-semibold">Wuchang</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tickets Section -->
+    <section class="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div class="max-w-6xl mx-auto">
+            <div class="mb-16 animate-fadeInUp">
+                <h2 class="section-title">Event Tickets</h2>
+                <p class="text-gray-600 mt-4 text-lg">Creative ticket designs for memorable events</p>
+            </div>
+            <div class="gallery-grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="portfolio-item h-80 animate-scaleIn cursor-pointer" onclick="openModal(this)">
+                    <img src="Tickets/suurya udanaya ticket ORG 01.jpg" alt="Soorya Udanaya Ticket">
+                    <div class="portfolio-overlay">
+                        <div class="text-white text-sm font-semibold">Soorya Udanaya</div>
+                    </div>
+                </div>
+                <div class="portfolio-item h-80 animate-scaleIn cursor-pointer" style="animation-delay: 0.1s" onclick="openModal(this)">
+                    <img src="Tickets/Ticket Boys.jpg" alt="Ticket Boys">
+                    <div class="portfolio-overlay">
+                        <div class="text-white text-sm font-semibold">Ticket Boys Event</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-20 px-4 sm:px-6 lg:px-8 hero-gradient text-white">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 text-center">
+                <div class="animate-fadeInUp">
+                    <div class="text-5xl font-bold mb-2">70+</div>
+                    <p class="text-xl text-gray-100">Design Projects</p>
+                </div>
+                <div class="animate-fadeInUp" style="animation-delay: 0.1s">
+                    <div class="text-5xl font-bold mb-2">100%</div>
+                    <p class="text-xl text-gray-100">Client Satisfaction</p>
+                </div>
+                <div class="animate-fadeInUp" style="animation-delay: 0.2s">
+                    <div class="text-5xl font-bold mb-2">3+</div>
+                    <p class="text-xl text-gray-100">Years Experience</p>
+                </div>
+                <div class="animate-fadeInUp" style="animation-delay: 0.3s">
+                    <div class="text-5xl font-bold mb-2">5+</div>
+                    <p class="text-xl text-gray-100">Design Categories</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="mb-12 animate-fadeInUp">
+                <h2 class="section-title">Get In Touch</h2>
+                <p class="text-gray-600 mt-4 text-lg">Let's create something amazing together</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12 animate-fadeInUp" style="animation-delay: 0.1s">
+                <div class="p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition transform hover:scale-105">
+                    <div class="text-3xl mb-4">📧</div>
+                    <h3 class="font-bold text-lg mb-2">Email</h3>
+                    <p class="text-gray-600">dilshanpasindu593@gmail.com</p>
+                </div>
+                <div class="p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition transform hover:scale-105">
+                    <div class="text-3xl mb-4">📱</div>
+                    <h3 class="font-bold text-lg mb-2">Phone</h3>
+                    <p class="text-gray-600">+94 70-2944475</p>
+                </div>
+                <div class="p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition transform hover:scale-105">
+                    <a href="https://web.facebook.com/profile.php?id=100062932825601" target="_blank" class="block">
+                        <img src="https://img.icons8.com/?size=100&id=uLWV5A9vXIPu&format=png&color=000000" alt="Facebook" class="w-12 h-12 mx-auto mb-4">
+                        <h3 class="font-bold text-lg mb-2 text-center">Facebook</h3>
+                        <p class="text-blue-600 hover:text-blue-800 font-semibold transition text-center">Visit Our Page</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                <div>
+                    <h3 class="font-bold text-lg mb-4">About</h3>
+                    <p class="text-gray-400">Professional graphic designer at Galactic Graphics creating stunning futuristic visual content for brands and businesses.</p>
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg mb-4">Quick Links</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#home" class="hover:text-white transition">Home</a></li>
+                        <li><a href="#flyers" class="hover:text-white transition">Portfolio</a></li>
+                        <li><a href="#contact" class="hover:text-white transition">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg mb-4">Follow</h3>
+                    <div class="flex gap-4">
+                        <a href="https://web.facebook.com/profile.php?id=100062932825601" target="_blank" class="transition hover:opacity-80">
+                            <img src="https://img.icons8.com/?size=100&id=uLWV5A9vXIPu&format=png&color=ffffff" alt="Facebook" class="w-8 h-8">
+                        </a>
+                        <!-- <a href="#" class="text-gray-400 hover:text-white transition text-2xl">🐦</a>
+                        <a href="#" class="text-gray-400 hover:text-white transition text-2xl">📷</a> -->
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 Galactic Graphics. All rights reserved. | Designed with ❤️</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Image Modal Popup -->
+    <div id="imageModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black bg-opacity-95 p-4" onclick="closeModal(event)">
+        <div class="relative w-full h-full flex flex-col justify-center items-center animate-scaleIn" onclick="event.stopPropagation()">
+            <!-- Close Button -->
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-white hover:text-gray-300 transition text-4xl font-bold z-10 bg-gray-900 bg-opacity-50 rounded-full w-12 h-12 flex items-center justify-center hover:bg-opacity-75">
+                ✕
+            </button>
+
+            <!-- Main Image Container -->
+            <div class="relative w-full h-full max-w-5xl max-h-screen flex items-center justify-center">
+                <img id="modalImage" src="" alt="Full Size Image" class="max-w-full max-h-[75vh] object-contain rounded-lg">
+            </div>
+
+            <!-- Navigation and Info -->
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-gray-900 via-gray-900 to-transparent p-8 pt-12 flex items-center justify-between">
+                <button onclick="previousImage()" class="hover:text-gray-300 transition text-2xl font-bold px-6 py-2 bg-gray-800 bg-opacity-70 rounded-lg hover:bg-opacity-90 text-white">
+                    ← Previous
+                </button>
+                
+                <div class="text-center flex-1 mx-6 text-white">
+                    <p id="imageName" class="text-lg font-bold">Design Name</p>
+                    <p id="imageCounter" class="text-sm text-gray-300 mt-1">Image <span id="currentSlide">1</span> of <span id="totalSlides">0</span></p>
+                </div>
+
+                <button onclick="nextImage()" class="hover:text-gray-300 transition text-2xl font-bold px-6 py-2 bg-gray-800 bg-opacity-70 rounded-lg hover:bg-opacity-90 text-white">
+                    Next →
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Gallery Modal Functionality
+        let currentImageIndex = 0;
+        let allPortfolioItems = [];
+
+        function initializeGallery() {
+            allPortfolioItems = Array.from(document.querySelectorAll('.portfolio-item'));
+        }
+
+        function openModal(element) {
+            initializeGallery();
+            currentImageIndex = allPortfolioItems.indexOf(element);
+            displayImage();
+            document.getElementById('imageModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(event) {
+            // Close only if clicking on the modal background or close button
+            if (event && event.target.id !== 'imageModal') return;
+            document.getElementById('imageModal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        function displayImage() {
+            if (allPortfolioItems.length === 0) return;
+
+            const item = allPortfolioItems[currentImageIndex];
+            const img = item.querySelector('img');
+            const name = item.querySelector('.portfolio-overlay div').textContent;
+
+            document.getElementById('modalImage').src = img.src;
+            document.getElementById('modalImage').alt = img.alt;
+            document.getElementById('imageName').textContent = name;
+            document.getElementById('currentSlide').textContent = currentImageIndex + 1;
+            document.getElementById('totalSlides').textContent = allPortfolioItems.length;
+        }
+
+        function nextImage() {
+            currentImageIndex = (currentImageIndex + 1) % allPortfolioItems.length;
+            displayImage();
+        }
+
+        function previousImage() {
+            currentImageIndex = (currentImageIndex - 1 + allPortfolioItems.length) % allPortfolioItems.length;
+            displayImage();
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(event) {
+            const modal = document.getElementById('imageModal');
+            if (modal.classList.contains('hidden')) return;
+
+            if (event.key === 'ArrowRight') nextImage();
+            if (event.key === 'ArrowLeft') previousImage();
+            if (event.key === 'Escape') closeModal();
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for animation on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.animate-fadeInUp, .animate-scaleIn').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Form submission handler
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your message! We will get back to you soon.');
+            this.reset();
+        });
+    </script>
+</body>
+</html>
